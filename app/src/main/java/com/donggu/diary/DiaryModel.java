@@ -1,9 +1,11 @@
 package com.donggu.diary;
 
+import java.io.Serializable;
+
 /**
  * 다이어리 리스트 아이템을 구성하는 모델 (표본)
  */
-public class DiaryModel {
+public class DiaryModel implements Serializable {
 
     int id; // 게시물 고유 id 값
     String title; // 게시물 제목

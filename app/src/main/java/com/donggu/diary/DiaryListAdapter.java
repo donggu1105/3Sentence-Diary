@@ -1,6 +1,7 @@
 package com.donggu.diary;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,7 +86,34 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.View
             super(itemView);
             iv_weather = itemView.findViewById(R.id.iv_weather); // 날씨 이미지
             tv_title = itemView.findViewById(R.id.tv_title); // 다이어리 제목
-            tv_user_date = itemView.findViewById(R.id.tv_user_date); //
+            tv_user_date = itemView.findViewById(R.id.tv_user_date); // 사용자 지정 날짜
+
+            // 일반 클릭 (상세 보기)
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 현재 클릭이된 위치
+                    int currentPosition = getAdapterPosition();
+                    // 현재 클릭 된 리스트 아이템 정보를 가지는 변수
+                    DiaryModel diaryModel = mLstDiary.get(currentPosition);
+
+                    // 화면 이동 및 다이어리 데이터 다음 엑티비티로 전달
+                    Intent diaryDetailIntent = new Intent(mContext, DiaryDetailActivity.class);
+                    diaryDetailIntent.putExtra("diaryModel", diaryModel); // 다이어리 데이터 넘기기
+                    diaryDetailIntent.putExtra("mode", "detail"); // 상세보기 모드로 설정
+                    mContext.startActivity(diaryDetailIntent);
+
+                }
+            });
+
+
+            // 선택지 옵션 팝업 (수정, 삭제)
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    return false;
+                }
+            });
         }
     }
 
