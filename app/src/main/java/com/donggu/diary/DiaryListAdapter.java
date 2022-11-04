@@ -1,6 +1,8 @@
 package com.donggu.diary;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,6 +113,33 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.View
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
+
+                    int currentPosition = getAdapterPosition();
+
+                    DiaryModel diaryModel = mLstDiary.get(currentPosition);
+
+                    // 버튼 선택지 배열
+                    String[] strChoiceArray = {"수정 하기", "삭제 하기"};
+                    // 팝업화면 표시
+                    new AlertDialog.Builder(mContext)
+                            .setTitle("원하시는 동작을 선택하세요")
+                            .setItems(strChoiceArray, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int position) {
+                                    if (position == 0) {
+                                        // 수정하기
+                                        Intent diaryDetailIntent = new Intent(mContext, DiaryDetailActivity.class);
+                                        diaryDetailIntent.putExtra("diaryModel", diaryModel); // 다이어리 데이터 넘기기
+                                        diaryDetailIntent.putExtra("mode", "modify"); // 상세보기 모드로 설정
+                                        mContext.startActivity(diaryDetailIntent);
+                                    } else if (position == 1) {
+                                        // 삭제하기
+                                        mLstDiary.remove(currentPosition);
+                                        notifyItemRemoved(currentPosition);
+                                    }
+                                }
+                            }).show();
+
                     return false;
                 }
             });
