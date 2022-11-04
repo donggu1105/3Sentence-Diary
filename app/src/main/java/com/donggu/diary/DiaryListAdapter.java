@@ -30,6 +30,42 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.View
     public void onBindViewHolder(@NonNull DiaryListAdapter.ViewHolder holder, int position) {
         // onBindViewHolder() : 생성된 아이템 뷰가 실제 연동이 되어지는 곳
 
+        // 날씨의 경우의 수 작성
+        int weatherType = mLstDiary.get(position).getWeatherType();
+        switch (weatherType) {
+
+            case 0:
+                // 맑음
+                holder.iv_weather.setImageResource(R.drawable.img_sun);
+                break;
+            case 1:
+                // 흐림뒤갬
+                holder.iv_weather.setImageResource(R.drawable.img_cloudy);
+                break;
+            case 2:
+                // 흐림
+                holder.iv_weather.setImageResource(R.drawable.img_cloud);
+                break;
+            case 3:
+                // 매우흐림
+                holder.iv_weather.setImageResource(R.drawable.img_bad_cloud);
+                break;
+            case 4:
+                // 비
+                holder.iv_weather.setImageResource(R.drawable.img_rainy);
+                break;
+            case 5:
+                // 눈
+                holder.iv_weather.setImageResource(R.drawable.img_snowy);
+                break;
+        }
+
+        // 날씨 제목 , 일시
+        String title = mLstDiary.get(position).getTitle();
+        String userDate = mLstDiary.get(position).getUserDate();
+
+        holder.tv_user_date.setText(userDate);
+        holder.tv_title.setText(title);
 
 
     }
@@ -51,5 +87,9 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.View
             tv_title = itemView.findViewById(R.id.tv_title); // 다이어리 제목
             tv_user_date = itemView.findViewById(R.id.tv_user_date); //
         }
+    }
+
+    public void setSampleList(ArrayList<DiaryModel> lstDiary) {
+        mLstDiary = lstDiary;
     }
 }

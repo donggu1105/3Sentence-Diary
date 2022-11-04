@@ -12,6 +12,14 @@ public class DiaryModel {
     String userDate; // 사용자가 지정한 날짜
     String writeDate; // 게시글 작성한 날짜
 
+    public DiaryModel(int id, String title, String content, int weatherType, String userDate, String writeDate) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.weatherType = weatherType;
+        this.userDate = userDate;
+        this.writeDate = writeDate;
+    }
 
     // getter & setter
 
