@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DiaryDetailActivity">
+    tools:context=".DiaryDetailActivity"
+    android:layout_margin="16dp">
 
 
-<!--    header  -->
-
+    <!--    header  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,39 +20,211 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/img_back"
-            app:tint="@color/black"
-            />
+            app:tint="@color/black" />
         <!--    전체 화면 타이틀 -->
         <TextView
             android:id="@+id/tv_header_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="새 글 작성"
-            android:textSize="24sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
             android:layout_gravity="center"
             android:layout_marginLeft="16dp"
+            android:text="새 글 작성"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
 
             />
-        
+
         <Space
-            android:layout_width=""
-            android:layout_height=""
+            android:layout_width="8dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
         <!--    작성 완료   -->
         <ImageView
             android:id="@+id/iv_check"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
             android:src="@drawable/img_check"
-            app:tint="#43a047"
-            />
+            app:tint="#43a047" />
+
+
+    </LinearLayout>
+    <!--    title input field   -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="제목"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
+
+        <EditText
+            android:id="@+id/et_title"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_input_field"
+            android:maxLength="20"
+            android:maxLines="1"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+    <!--        DATE    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="일시"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2022.11.07 월요일"
+                    android:textColor="#039be5"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    />
+
+
+    </LinearLayout>
+<!--    Weather-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="날씨"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/rg_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="#504f4f"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            >
+
+            <RadioButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+
+                android:button="@null"
+                android:background="@drawable/selector_btn_sun"/>
+
+
+            <RadioButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="16dp"
+                android:button="@null"
+                android:background="@drawable/selector_btn_cloudy"/>
+
+
+            <RadioButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="16dp"
+                android:button="@null"
+                android:background="@drawable/selector_btn_bad_cloud"/>
+
+
+            <RadioButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="16dp"
+                android:button="@null"
+                android:background="@drawable/selector_btn_cloud"/>
+
+
+            <RadioButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="16dp"
+                android:button="@null"
+                android:background="@drawable/selector_btn_rainy"/>
+
+
+            <RadioButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="16dp"
+                android:button="@null"
+                android:background="@drawable/selector_btn_snowy"/>
+
+
+        </RadioGroup>
+
 
 
     </LinearLayout>
 
+<!--    CONTENT-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내용"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
 
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:layout_marginTop="8dp"
+            android:maxLines="15"
+            android:lines="15"
+            android:singleLine="true"
+            android:maxLength="120"
+            android:scrollbars="vertical"
+            android:scrollHorizontally="false"
+            android:overScrollMode="always"
+            android:gravity="top|left"
+            android:background="@drawable/shape_input_field"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+
+
+
+    </LinearLayout>
 
 
 </LinearLayout>
