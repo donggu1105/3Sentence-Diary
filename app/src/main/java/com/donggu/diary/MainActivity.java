@@ -3,6 +3,7 @@ package com.donggu.diary;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -41,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // 작성하기 버튼을 누를떄 호출 되는 곳
-
+                Intent intent = new Intent(MainActivity.this, DiaryDetailActivity.class);
+                startActivity(intent);
             }
         });
     }
