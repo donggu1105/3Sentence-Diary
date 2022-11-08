@@ -19,12 +19,14 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.View
 
     ArrayList<DiaryModel> mLstDiary;
     Context mContext;
+    DatabaseHelper mDatabaseHelper;
 
     @NonNull
     @Override
     public DiaryListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // onCreateViewHolder() : 아이템 뷰가 최초로 생성이 될때 호출되는 곳
         mContext = parent.getContext();
+        mDatabaseHelper = new DatabaseHelper(mContext);
         View holder = LayoutInflater.from(mContext).inflate(R.layout.list_item_diary, parent, false); // list view 안에 item을 붙혀나가는 행위
         return new ViewHolder(holder);
     }
@@ -134,6 +136,7 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.View
                                         mContext.startActivity(diaryDetailIntent);
                                     } else if (position == 1) {
                                         // 삭제하기
+                                        mDatabaseHelper.setDeleteDiaryList(diaryModel.getWriteDate());
                                         mLstDiary.remove(currentPosition);
                                         notifyItemRemoved(currentPosition);
                                     }
@@ -146,7 +149,9 @@ public class DiaryListAdapter extends RecyclerView.Adapter<DiaryListAdapter.View
         }
     }
 
-    public void setSampleList(ArrayList<DiaryModel> lstDiary) {
+    public void setListInit(ArrayList<DiaryModel> lstDiary) {
         mLstDiary = lstDiary;
+        notifyDataSetChanged();
     }
+
 }

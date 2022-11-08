@@ -3,14 +3,18 @@ package com.donggu.diary;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.radiobutton.MaterialRadioButton;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -33,12 +37,16 @@ public class DiaryDetailActivity extends AppCompatActivity implements View.OnCli
     private String mSelectedUserDate = ""; // 선택된 일시 값
     private int mSelectedWeatherType = -1; // 선택한 날씨 값 (1~6)
 
+    private DatabaseHelper mDatabaseHelper;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary_detail);
+
+        mDatabaseHelper = new DatabaseHelper(this);
 
 
         mTvDate = findViewById(R.id.tv_date); // 일시 설정 텍스트
@@ -57,6 +65,42 @@ public class DiaryDetailActivity extends AppCompatActivity implements View.OnCli
         mSelectedUserDate = new SimpleDateFormat("yyyy.MM.dd (E요일)", Locale.KOREAN).format(new Date());
         mTvDate.setText(mSelectedUserDate);
 
+        // 이전 액티비티로부터 값을 전달 받기
+        Intent intent = getIntent();
+        if (intent.getExtras() != null) {
+            // intentn putExtra 했던 데이터가 존재한다면 내부를 수행
+            DiaryModel diaryModel = (DiaryModel) intent.getSerializableExtra("diaryModel");
+            mDetailMode = intent.getStringExtra("mode");
+            mBeforeDate = diaryModel.getWriteDate();
+
+            // 넘겨받은 값을 화용해서 각 필드들에 설정해주기
+            mEtTitle.setText(diaryModel.getTitle());
+            mEtContent.setText(diaryModel.getContent());
+            int weatherType = diaryModel.getWeatherType();
+            ((MaterialRadioButton) mRgWeather.getChildAt(weatherType)).setChecked(true);
+            mSelectedUserDate = diaryModel.getUserDate();
+            mTvDate.setText(diaryModel.getUserDate());
+
+            if (mDetailMode.equals("modify")) {
+                // 수정 모드
+                TextView tv_header_title = findViewById(R.id.tv_header_title);
+                tv_header_title.setText("일기 수정");
+            } else if (mDetailMode.equals("detail")) {
+                // 상세 보기 모드
+                TextView tv_header_title = findViewById(R.id.tv_header_title);
+                tv_header_title.setText("상세보기");
+
+                // 읽기 전용
+                mEtTitle.setEnabled(false);
+                mEtContent.setEnabled(false);
+                mTvDate.setEnabled(false);
+                for (int i = 0; i < mRgWeather.getChildCount(); i++) {
+                    mRgWeather.getChildAt(i).setEnabled(false);
+                }
+                // 작성완료 버튼을 invisible 처리
+                iv_check.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     @Override
@@ -91,12 +135,20 @@ public class DiaryDetailActivity extends AppCompatActivity implements View.OnCli
                 String title = mEtTitle.getText().toString(); // 제목 입력 값
                 String content = mEtContent.getText().toString(); // 내용 입력 값
                 String userDate = mSelectedUserDate; // 사용자가 선택한 일시
-
+                if (userDate.equals("")) {
+                    userDate = mTvDate.getText().toString();
+                }
                 String writeDate = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREAN).format(new Date());
 
 
                 // 데이터베이스에 저장
-
+                if (mDetailMode.equals("modify")) {
+                    mDatabaseHelper.setUpdateDiaryList(title, content, mSelectedWeatherType, userDate, writeDate, mBeforeDate);
+                    Toast.makeText(this, "다이어리 수정 완료 되었습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    mDatabaseHelper.setInsertDiaryList(title, content, mSelectedWeatherType, userDate, writeDate);
+                    Toast.makeText(this, "다이어리 등록 완료 되었습니다.", Toast.LENGTH_SHORT).show();
+                }
 
                 // 끝
                 finish();

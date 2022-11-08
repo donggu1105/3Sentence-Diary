@@ -16,23 +16,20 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRvDiary; // 리사이클러 뷰 ( 리스트 뷰)
     DiaryListAdapter mAdapter; // 리사이클러 뷰와 연동할 어댑터
     ArrayList<DiaryModel> mLstDiary; // 리스트에 표현할 다이어리 데이터들 (배열)
+    DatabaseHelper mDatabaseHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mDatabaseHelper = new DatabaseHelper(this);
         mLstDiary = new ArrayList<>();
         mRvDiary = findViewById(R.id.rv_diary);
         mAdapter = new DiaryListAdapter(); // 리사이클러 뷰 어뎁터 인스터슨 생성
 
 
-        for (int i = 0; i < 5; i++) {
-            DiaryModel item = new DiaryModel(i, "title" + i , "cotent" + i, i, "2022.11.03", "2022.11.03");
-            mLstDiary.add(item);
-        }
-
-        mAdapter.setSampleList(mLstDiary);
         mRvDiary.setAdapter(mAdapter);
 
 
@@ -46,5 +43,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 액티비티가 재개 될떄
+        setLoadRecentList();
+
+    }
+
+    private void setLoadRecentList() {
+        // 최근 데이터베이스 정보가져와서 리사이클러뷰에 갱신해준다.
+
+        if (!mLstDiary.isEmpty()) {
+            mLstDiary.clear();
+        }
+
+        mLstDiary = mDatabaseHelper.getDiaryListFromDB();
+        mAdapter.setListInit(mLstDiary);
     }
 }
