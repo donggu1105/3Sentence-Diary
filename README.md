@@ -6,16 +6,14 @@ https://play.google.com/store/apps/details?id=com.donggu.diary
 
 <h1 style="text-align: center"> Main Page </h1>
 
-<img style="align-content: center" src="app/src/main/res/drawable/img_bad_cloud.png">
+<img style="align-content: center" src="app/src/main/res/drawable/screen_main_page.jpg">
 
-<h1 style="text-align: center"> Problem Page </h1>
-<img style="align-content: center" src="app/src/main/res/drawable/img_bad_cloud.png">
+<h1 style="text-align: center"> List Page </h1>
+<img style="align-content: center" src="app/src/main/res/drawable/screen_list_page.jpg">
 
-<h1 style="text-align: center"> Loading Page  </h1>
-<img style="align-content: center" src="app/src/main/res/drawable/img_bad_cloud.png">
+<h1 style="text-align: center"> Writing Page  </h1>
+<img style="align-content: center" src="app/src/main/res/drawable/screen_write_page.jpg">
 
-<h1 style="text-align: center"> Result Page  </h1>
-<img style="align-content: center" src="app/src/main/res/drawable/img_bad_cloud.png">
+<h1 style="text-align: center"> Reading Page  </h1>
+<img style="align-content: center" src="app/src/main/res/drawable/screen_read_page.jpg">
 
-<h1 style="text-align: center"> Fruit List Page  </h1>
-<img style="align-content: center" src="app/src/main/res/drawable/img_bad_cloud.png">
